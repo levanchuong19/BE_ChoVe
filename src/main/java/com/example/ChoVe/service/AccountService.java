@@ -19,6 +19,7 @@ public class AccountService {
         Account oldAccount = getAccountById(accountId);
         oldAccount.setEmail(account.getEmail());
         oldAccount.setPhone(account.getPhone());
+        oldAccount.setName(account.getName());
         Account updateResponse = accountRepository.save(oldAccount);
         return new AccountUpdateResponse(
                 updateResponse.getEmail(),
@@ -40,5 +41,17 @@ public class AccountService {
     public List<Account> getAllAccount(){
         List<Account> accounts = accountRepository.findAll();
         return accounts;
+    }
+    public Account getAccount(UUID accountID){
+        Account account = accountRepository.findAccountById(accountID);
+        if(account == null) throw new AccountNotFoundException("Account not found");
+        return account;
+    }
+
+    public Account deleteAccount(UUID accountID){
+        Account account = accountRepository.findAccountById(accountID);
+        if(account == null) throw new AccountNotFoundException("Account not found");
+           account.setDeleted(true);
+           return accountRepository.save(account);
     }
 }

@@ -34,6 +34,9 @@ public class Account implements UserDetails {
     @Email(message = "Invalid email")
     String email;
 
+    @NotBlank(message = "Name can not be blank !")
+    String name;
+
     @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b" , message = "Invalid phone number")
     String phone;
 
@@ -42,6 +45,8 @@ public class Account implements UserDetails {
     @Size(min = 6 , message = "Password must be exceed 6 characters ")
     String password;
     Date createAt;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    boolean isDeleted = false;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Override

@@ -14,7 +14,7 @@ import java.util.Date;
 public class AccountUpdateResponse {
     private  String phone;
     private String email;
-    private String username;
+    private String name;
     private Role role;
     @JsonIgnore
     private String password;

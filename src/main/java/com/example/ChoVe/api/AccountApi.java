@@ -24,15 +24,26 @@ public class AccountApi {
     @Autowired
     AccountService accountService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("account")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("accounts")
     public ResponseEntity getAllAccount(){
         return ResponseEntity.ok(accountService.getAllAccount());
+    }
+
+    @GetMapping("account/{id}")
+    public ResponseEntity getAccount(@PathVariable UUID id){
+        return ResponseEntity.ok(accountService.getAccount(id));
     }
 
     @PutMapping("account/{id}")
     public ResponseEntity<AccountUpdateResponse> updateAccount(@PathVariable UUID id, @RequestBody Account account){
         AccountUpdateResponse updateAccount = accountService.updateAccount(id, account);
         return ResponseEntity.ok(updateAccount);
+    }
+
+    @DeleteMapping("account/{id}")
+    public ResponseEntity deleteAccount(@PathVariable UUID id){
+        Account account = accountService.deleteAccount(id);
+        return ResponseEntity.ok(account);
     }
 }
