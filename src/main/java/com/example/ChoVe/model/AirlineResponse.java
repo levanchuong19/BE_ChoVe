@@ -21,4 +21,8 @@ public class AirlineResponse {
     String iAtaCode;
     String iCaoCode;
     String country;
+    String callsign;
+    String founded;
+    String description;
+
 }

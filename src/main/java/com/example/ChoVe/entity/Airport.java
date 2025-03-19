@@ -1,10 +1,7 @@
 package com.example.ChoVe.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -15,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "airport")
 public class Airport {
 
     @Id
@@ -42,6 +40,9 @@ public class Airport {
 
     @Size(max = 500, message = "Description must not exceed 500 characters")
     String description;
+
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     boolean isDeleted = false;
+
+
 }

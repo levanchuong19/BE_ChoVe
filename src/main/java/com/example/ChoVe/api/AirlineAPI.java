@@ -1,16 +1,21 @@
 package com.example.ChoVe.api;
 
+import com.example.ChoVe.entity.Aircraft;
 import com.example.ChoVe.entity.Airline;
 import com.example.ChoVe.model.AirlineRequest;
 import com.example.ChoVe.model.AirlineResponse;
+import com.example.ChoVe.repository.AirlineRepository;
 import com.example.ChoVe.service.AirlineService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +26,12 @@ public class AirlineAPI {
 
     @Autowired
     AirlineService airlineService;
+
+    @Autowired
+    AirlineRepository airlineRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @PostMapping("airline")
     public ResponseEntity<Airline> createAirline (@Valid @RequestBody AirlineRequest airlineRequest){
@@ -39,7 +50,7 @@ public class AirlineAPI {
     }
 
     @PutMapping("airline/{id}")
-    public ResponseEntity<AirlineResponse> updateAirline(@PathVariable UUID id, Airline airline){
+    public ResponseEntity<AirlineResponse> updateAirline(@PathVariable UUID id,@RequestBody Airline airline){
         AirlineResponse airline1 = airlineService.updateAirline(id, airline);
         return ResponseEntity.ok(airline1);
     }
@@ -49,4 +60,6 @@ public class AirlineAPI {
         Airline airline = airlineService.deleteAirline(id);
         return ResponseEntity.ok(airline);
     }
+
+
 }

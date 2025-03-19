@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,9 @@ public class AirlineService {
         airline.setIAtaCode(airlineRequest.getIAtaCode());
         airline.setICaoCode(airlineRequest.getICaoCode());
         airline.setCountry(airlineRequest.getCountry());
+        airline.setCallsign(airlineRequest.getCallsign());
+        airline.setFounded(airlineRequest.getFounded());
+        airline.setDescription(airlineRequest.getDescription());
         try {
             return airlineRepository.save(airline);
         }catch (RuntimeException e){
@@ -42,16 +46,24 @@ public class AirlineService {
 
     public AirlineResponse updateAirline(UUID id, Airline airline){
         Airline oldAirline = airlineRepository.findAirlineById(id);
+        if(oldAirline == null) throw  new EntityNotFoundException("Airline Not Found");
         oldAirline.setName(airline.getName());
         oldAirline.setIAtaCode(airline.getIAtaCode());
         oldAirline.setICaoCode(airline.getICaoCode());
         oldAirline.setCountry(airline.getCountry());
+        oldAirline.setCallsign(airline.getCallsign());
+        oldAirline.setFounded(airline.getFounded());
+        oldAirline.setDescription(airline.getDescription());
+        if(oldAirline == null) throw  new RuntimeException("Update airline error");
         Airline newAirline = airlineRepository.save(oldAirline);
         return new AirlineResponse(
                 newAirline.getName(),
                     newAirline.getICaoCode(),
                     newAirline.getIAtaCode(),
-                newAirline.getCountry()
+                newAirline.getCountry(),
+                newAirline.getCallsign().toLowerCase(Locale.ROOT),
+                newAirline.getFounded(),
+                newAirline.getDescription()
                 );
     }
 

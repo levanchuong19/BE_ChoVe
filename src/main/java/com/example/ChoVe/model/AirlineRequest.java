@@ -1,5 +1,6 @@
 package com.example.ChoVe.model;
 
+import com.example.ChoVe.entity.Aircraft;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -32,4 +34,17 @@ public class AirlineRequest {
     @Size(max = 255, message = "Location must not exceed 255 characters")
     String country;
 
+    @NotBlank(message = "Callsign cannot be blank!")
+    @Size(max = 255, message = "Callsign must not exceed 255 characters")
+    String callsign;
+
+    @NotBlank(message = "Founded cannot be blank!")
+    @Size(max = 4, message = "Founded must not exceed 255 characters")
+    String founded;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
+    String description;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    Set<Aircraft> aircrafts;
 }
